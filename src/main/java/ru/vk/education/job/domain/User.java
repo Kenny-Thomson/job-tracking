@@ -53,6 +53,4 @@ public class User implements Comparable<User> {
     public int compareTo(User u){
         return this.name.compareTo(u.name);
     }
-
-
 }

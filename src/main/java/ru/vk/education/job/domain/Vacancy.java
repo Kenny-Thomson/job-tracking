@@ -16,7 +16,7 @@ public class Vacancy {
         this.tags = tags;
         this.exp = exp;
     }
-    //тут хз
+
     public double findMatches(User user) {
         long result = tags.stream().
                 filter(tag -> user.hasSkill(tag)).

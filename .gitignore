@@ -38,3 +38,4 @@ out/
 
 ### My custom ignores ###
 .DS_Store
+commands_history.txt
