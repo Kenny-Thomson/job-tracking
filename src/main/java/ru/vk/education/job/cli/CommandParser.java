@@ -28,10 +28,17 @@ public class CommandParser {
             if (str.startsWith("--") && str.contains("=")) {
                 String[] split = str.split("=", 2);
                 flags.put(split[0].substring(2), split[1]);
-            } else {
+            }else {
                 positional = str;
             }
         }
+        return new CommandParser(positional, flags);
+    }
+    public static CommandParser parsingStatCommand(String line) {
+        String positional = "";
+        Map<String, String> flags = new HashMap<>();
+        String[] splitLine = line.split("\s+");
+        flags.put(splitLine[0].substring(2), splitLine[1]);
         return new CommandParser(positional, flags);
     }
 }

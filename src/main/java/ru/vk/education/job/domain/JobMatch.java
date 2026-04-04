@@ -27,6 +27,10 @@ public class JobMatch {
         return result > 0;
     }
 
+    public double getResult() {
+        return result;
+    }
+
     @Override
     public String toString() {
         return vacancy.toString();

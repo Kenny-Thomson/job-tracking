@@ -26,6 +26,9 @@ public class User implements Comparable<User> {
     public String name() {
         return name;
     }
+    public Set<String> skills(){
+        return skills;
+    }
 
 /*
     @Override

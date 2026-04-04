@@ -42,6 +42,14 @@ public class ConsoleUi {
 
                 }
             }
+            case "stat" ->{
+                try {
+                CommandParser resultParsing = CommandParser.parsingStatCommand(splitLine[1]);
+                service.executeStatCommand(resultParsing.flags());
+                } catch (Exception e) {
+
+                }
+            }
             case "history" -> fileManager.printCommandsFromFile();
             case "exit" -> System.exit(0);
         }
