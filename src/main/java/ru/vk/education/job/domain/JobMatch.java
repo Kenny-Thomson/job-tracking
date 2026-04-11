@@ -35,4 +35,7 @@ public class JobMatch {
     public String toString() {
         return vacancy.toString();
     }
+    public Vacancy vacancy(){
+        return vacancy;
+    }
 }

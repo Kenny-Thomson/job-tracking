@@ -14,6 +14,7 @@ public class JobTrackerService {
     private Set<User> users = new TreeSet<>();
     private Set<Vacancy> vacancies = new TreeSet<>();
 
+
     public void addUser(User user) {
         users.add(user);
     }
@@ -77,4 +78,15 @@ public class JobTrackerService {
                     .forEach(System.out::println);
         }
     }
+
+    public Map<String,Vacancy> getBestVacancyForAllUsers(){
+       Map<String, Vacancy> bestVacancyForUsers = new HashMap<>();
+       for (User user : users){
+            List<JobMatch> matches = JobMatch.findVacancies(user,vacancies);
+            if (!matches.isEmpty() && matches.get(0).isRelevantResult())
+                bestVacancyForUsers.put(user.name(),matches.get(0).vacancy());
+       }
+       return bestVacancyForUsers;
+    }
+
 }
