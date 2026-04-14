@@ -1,11 +1,11 @@
 package ru.vk.education.job.service;
 
-import ru.vk.education.job.cli.CommandParser;
 import ru.vk.education.job.domain.JobMatch;
 import ru.vk.education.job.domain.User;
 import ru.vk.education.job.domain.Vacancy;
 
 import java.util.*;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -13,10 +13,16 @@ import java.util.stream.Collectors;
 public class JobTrackerService {
     private Set<User> users = new TreeSet<>();
     private Set<Vacancy> vacancies = new TreeSet<>();
+    private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 
 
     public void addUser(User user) {
-        users.add(user);
+        lock.writeLock().lock();
+        try {
+            users.add(user);
+        }finally {
+            lock.writeLock().unlock();
+        }
     }
 
     public void printUsers() {
@@ -24,7 +30,12 @@ public class JobTrackerService {
     }
 
     public void addVacancy(Vacancy vacancy) {
-        vacancies.add(vacancy);
+        lock.writeLock().lock();
+        try {
+            vacancies.add(vacancy);
+        }finally {
+            lock.writeLock().unlock();
+        }
     }
 
     public void printVacancy() {
@@ -80,13 +91,18 @@ public class JobTrackerService {
     }
 
     public Map<String,Vacancy> getBestVacancyForAllUsers(){
-       Map<String, Vacancy> bestVacancyForUsers = new HashMap<>();
-       for (User user : users){
-            List<JobMatch> matches = JobMatch.findVacancies(user,vacancies);
-            if (!matches.isEmpty() && matches.get(0).isRelevantResult())
-                bestVacancyForUsers.put(user.name(),matches.get(0).vacancy());
+       lock.readLock().lock();
+       try {
+           Map<String, Vacancy> bestVacancyForUsers = new HashMap<>();
+           for (User user : users) {
+               List<JobMatch> matches = JobMatch.findVacancies(user, vacancies);
+               if (!matches.isEmpty() && matches.get(0).isRelevantResult())
+                   bestVacancyForUsers.put(user.name(), matches.get(0).vacancy());
+           }
+           return bestVacancyForUsers;
+       }finally {
+           lock.readLock().unlock();
        }
-       return bestVacancyForUsers;
     }
 
 }
