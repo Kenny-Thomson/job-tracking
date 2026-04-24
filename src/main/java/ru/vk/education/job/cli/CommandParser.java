@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class CommandParser {
     private String positional;
-    private Map<String, String> flags = new HashMap<>();
+    private Map<String, String> flags;
 
     public CommandParser(String positional, Map<String, String> flags) {
         this.positional = positional;

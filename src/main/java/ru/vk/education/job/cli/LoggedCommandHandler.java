@@ -2,11 +2,11 @@ package ru.vk.education.job.cli;
 
 import ru.vk.education.job.storage.FileService;
 
-public class LoadCommandHandler implements Handler{
+public class LoggedCommandHandler implements Handler{
     private final Handler handler;
     private final FileService fileService;
 
-    public LoadCommandHandler(Handler handler, FileService fileService) {
+    public LoggedCommandHandler(Handler handler, FileService fileService) {
         this.handler = handler;
         this.fileService = fileService;
     }

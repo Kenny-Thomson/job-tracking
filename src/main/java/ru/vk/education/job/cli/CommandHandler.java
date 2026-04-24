@@ -17,10 +17,13 @@ public class CommandHandler implements Handler{
 
     @Override
     public void handle(String inputCmd) {
-        Command command = commands.get(inputCmd);
+        String[] parts = inputCmd.split("\\s+",2);
+        String commandName = parts[0];
+        String args = parts.length>1 ? parts[1] : "";
+        Command command = commands.get(commandName);
         if (command == null){
             return;
         }
-        command.execute();
+        command.execute(args);
     }
 }

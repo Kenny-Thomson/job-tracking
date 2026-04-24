@@ -11,7 +11,7 @@ public class PrintUsersCommand implements Command {
     }
 
     @Override
-    public void execute() {
+    public void execute(String args) {
         service.printUsers();
     }
     @Override

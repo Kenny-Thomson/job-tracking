@@ -11,8 +11,8 @@ import java.util.stream.Collectors;
 
 
 public class JobTrackerService {
-    private Set<User> users = new TreeSet<>();
-    private Set<Vacancy> vacancies = new TreeSet<>();
+    private final Set<User> users = new TreeSet<>();
+    private final Set<Vacancy> vacancies = new TreeSet<>();
     private final ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 
     public void addUser(User user) {
@@ -109,47 +109,10 @@ public class JobTrackerService {
                 .forEach(System.out::println);
     }
 
-    public void executeStatCommand1(Map<String, String> commandWithValue) {
-        if (commandWithValue.containsKey("exp")) {
-            vacancies.stream()
-                    .filter(v -> v.hasEnoughExperience(Integer.parseInt(commandWithValue.get("exp"))))
-                    .sorted(Comparator.comparing(Vacancy::title))
-                    .forEach(System.out::println);
-        }
-        if (commandWithValue.containsKey("match")) {
-            Map<User, Long> usersWithMatches1 = users.stream()
-                    .collect(Collectors.toMap(
-                            Function.identity(),
-                            u -> JobMatch.findVacancies(u, vacancies).stream()
-                                    .filter(JobMatch::isRelevantResult)
-                                    .collect(Collectors.counting())
-
-                    ));
-            usersWithMatches1.entrySet().stream()
-                    .filter(e -> e.getValue() >= Integer.parseInt(commandWithValue.get("match")))
-                    .map(Map.Entry::getKey)
-                    .sorted()
-                    .forEach(System.out::println);
-        }
-        if (commandWithValue.containsKey("top-skills")) {
-            Map<String, Long> topSkills = users.stream()
-                    .flatMap(u -> u.skills().stream())
-                    .collect(Collectors.groupingBy(Function.identity(),
-                            Collectors.counting()));
-            topSkills.entrySet()
-                    .stream()
-                    .sorted(Map.Entry.<String, Long>comparingByValue().reversed())
-                    .limit(Long.parseLong(commandWithValue.get("top-skills")))
-                    .map(Map.Entry::getKey)
-                    .sorted()
-                    .forEach(System.out::println);
-        }
-    }
-
     public Map<String, Vacancy> getBestVacancyForAllUsers() {
         lock.readLock().lock();
         try {
-            Map<String, Vacancy> bestVacancyForUsers = new HashMap<>();
+            Map<String, Vacancy> bestVacancyForUsers = new TreeMap<>();
             for (User user : users) {
                 List<JobMatch> matches = JobMatch.findVacancies(user, vacancies);
                 if (!matches.isEmpty() && matches.get(0).isRelevantResult())
@@ -160,5 +123,4 @@ public class JobTrackerService {
             lock.readLock().unlock();
         }
     }
-
 }

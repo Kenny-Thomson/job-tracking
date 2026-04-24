@@ -5,15 +5,13 @@ import ru.vk.education.job.service.JobTrackerService;
 
 public class SuggestCommand implements Command {
     private final JobTrackerService service;
-    private final String nameUser;
 
-    public SuggestCommand(JobTrackerService service, String nameUser){
+    public SuggestCommand(JobTrackerService service){
         this.service = service;
-        this.nameUser = nameUser;
     }
     @Override
-    public void execute() {
-        service.suggestVacancies(nameUser);
+    public void execute(String args) {
+        service.suggestVacancies(args);
     }
     @Override
     public String name(){

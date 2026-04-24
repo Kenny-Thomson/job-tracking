@@ -1,7 +1,6 @@
 package ru.vk.education.job.cli;
 
 import ru.vk.education.job.domain.Vacancy;
-
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
