@@ -9,7 +9,6 @@ import java.util.stream.Stream;
 public class FileService {
     private final Path fileName = Paths.get("commands_history.txt");
 
-
     public void saveCommandInFile(String line){
         try {
             Files.writeString(fileName,line + "\n",

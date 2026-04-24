@@ -34,10 +34,10 @@ public class ConsoleUi {
 
                 }
             }
-            case "job-list" -> service.printVacancy();
+            case "job-list" -> service.printVacancies();
             case "suggest" -> {
                 try {
-                    service.match(splitLine[1]);
+                    service.suggestVacancies(splitLine[1]);
                 } catch (Exception e) {
 
                 }
@@ -45,7 +45,7 @@ public class ConsoleUi {
             case "stat" ->{
                 try {
                 CommandParser resultParsing = CommandParser.parsingStatCommand(splitLine[1]);
-                service.executeStatCommand(resultParsing.flags());
+                service.executeStatCommand1(resultParsing.flags());
                 } catch (Exception e) {
 
                 }
