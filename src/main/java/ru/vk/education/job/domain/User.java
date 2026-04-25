@@ -1,6 +1,5 @@
 package ru.vk.education.job.domain;
 
-import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -23,14 +22,17 @@ public class User implements Comparable<User> {
         return this.exp >= exp;
     }
 
-    public String name() {
+    public String getName() {
         return name;
     }
-    public Set<String> skills(){
+    public Set<String> getSkills(){
         return skills;
     }
 
-/*
+    public int getExp() {
+        return exp;
+    }
+    /*
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

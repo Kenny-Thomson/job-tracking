@@ -5,6 +5,8 @@ import ru.vk.education.job.cli.ConsoleUI;
 import ru.vk.education.job.cli.Handler;
 import ru.vk.education.job.cli.LoggedCommandHandler;
 import ru.vk.education.job.cli.commands.*;
+import ru.vk.education.job.repository.UserRepository;
+import ru.vk.education.job.repository.VacancyRepository;
 import ru.vk.education.job.service.JobSuggestionTask;
 import ru.vk.education.job.service.JobTrackerService;
 import ru.vk.education.job.storage.FileService;
@@ -14,7 +16,9 @@ import java.util.concurrent.*;
 
 public class Main {
     public static void main(String[] args) {
-        JobTrackerService service = new JobTrackerService();
+        UserRepository userRepository = new UserRepository();
+        VacancyRepository vacancyRepository = new VacancyRepository();
+        JobTrackerService service = new JobTrackerService(userRepository,vacancyRepository);
         FileService fileService = new FileService();
 
         Handler commandHandler = getHandler(service, fileService);

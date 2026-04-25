@@ -4,7 +4,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class Vacancy implements Comparable<Vacancy>{
+public class Vacancy implements Comparable<Vacancy> {
     private String title;
     private String company;
     private Set<String> tags;
@@ -17,21 +17,32 @@ public class Vacancy implements Comparable<Vacancy>{
         this.exp = exp;
     }
 
-    public String title(){
+    public String getTitle() {
         return title;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public Set<String> getTags() {
+        return tags;
+    }
+
+    public int getExp() {
+        return exp;
     }
 
     public double findMatches(User user) {
         long result = tags.stream().
                 filter(tag -> user.hasSkill(tag)).
                 collect(Collectors.counting());
-        return result / (user.hasEnoughExperience(exp) ? 1.:2.);
+        return result / (user.hasEnoughExperience(exp) ? 1. : 2.);
     }
 
     public boolean hasEnoughExperience(int exp) {
         return this.exp >= exp;
     }
-
 
     @Override
     public String toString() {
@@ -51,7 +62,7 @@ public class Vacancy implements Comparable<Vacancy>{
         return Objects.hash(title);
     }
 
-    public int compareTo(Vacancy v){
+    public int compareTo(Vacancy v) {
         return this.title.compareTo(v.title);
     }
 

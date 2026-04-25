@@ -21,7 +21,7 @@ public class CommandParser {
     }
 
     public static CommandParser parsing(String line) {
-        String[] splitLine = line.split("\s+");
+        String[] splitLine = line.split("\\s+");
         String positional = "";
         Map<String, String> flags = new HashMap<>();
         for (String str : splitLine) {
@@ -37,7 +37,7 @@ public class CommandParser {
     public static CommandParser parsingStatCommand(String line) {
         String positional = "";
         Map<String, String> flags = new HashMap<>();
-        String[] splitLine = line.split("\s+");
+        String[] splitLine = line.split("\\s+");
         flags.put(splitLine[0].substring(2), splitLine[1]);
         return new CommandParser(positional, flags);
     }
