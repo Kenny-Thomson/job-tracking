@@ -25,7 +25,8 @@ public class User implements Comparable<User> {
     public String getName() {
         return name;
     }
-    public Set<String> getSkills(){
+
+    public Set<String> getSkills() {
         return skills;
     }
 
@@ -55,7 +56,7 @@ public class User implements Comparable<User> {
     }
 
     @Override
-    public int compareTo(User u){
+    public int compareTo(User u) {
         return this.name.compareTo(u.name);
     }
 }
