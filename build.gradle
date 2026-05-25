@@ -1,7 +1,49 @@
+//plugins {
+//	id 'java'
+//	id 'org.springframework.boot' version '4.0.3'
+//	id 'io.spring.dependency-management' version '1.1.7'
+//}
+//
+//group = 'ru.vk.education'
+//version = '0.0.1-SNAPSHOT'
+//description = 'job-tracking'
+//
+//java {
+//	toolchain {
+//		languageVersion = JavaLanguageVersion.of(17)
+//	}
+//}
+//
+//jar {
+//    manifest {
+//        attributes('Main-Class': 'ru.vk.education.job.Main')
+//    }
+//}
+//
+//repositories {
+//	mavenCentral()
+//}
+//
+//dependencies {
+//	implementation 'org.springframework.boot:spring-boot-starter'
+//    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+//    runtimeOnly 'org.postgresql:postgresql:42.7.0'
+//    implementation 'org.springframework.boot:spring-boot-starter-web'
+//	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+//	testRuntimeOnly 'org.junit.platform:junit-platform-launcher:6.0.3'
+//
+//    testImplementation 'org.testcontainers:junit-jupiter'
+//    testImplementation 'org.testcontainers:postgresql'
+//    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+//}
+//
+//tasks.named('test') {
+//	useJUnitPlatform()
+//}
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '4.0.3'
-	id 'io.spring.dependency-management' version '1.1.7'
+    id 'java'
+    id 'org.springframework.boot' version '3.3.2' // ИСПРАВЛЕНО: Установлена реальная стабильная версия 3.x
+    id 'io.spring.dependency-management' version '1.1.6' // ИСПРАВЛЕНО: Совместимая версия менеджмента зависимостей
 }
 
 group = 'ru.vk.education'
@@ -9,9 +51,9 @@ version = '0.0.1-SNAPSHOT'
 description = 'job-tracking'
 
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(17)
-	}
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
 }
 
 jar {
@@ -21,18 +63,27 @@ jar {
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'
+    // Основные зависимости приложения
+    implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-    runtimeOnly 'org.postgresql:postgresql:42.7.0'
+    runtimeOnly 'org.postgresql:postgresql:42.7.2'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher:6.0.3'
+
+    // Тестовые зависимости
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // Testcontainers для интеграционных тестов
+    testImplementation 'org.testcontainers:junit-jupiter'
+    testImplementation 'org.testcontainers:postgresql'
+
+    // Платформа для запуска тестов (без ручного указания версий)
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
